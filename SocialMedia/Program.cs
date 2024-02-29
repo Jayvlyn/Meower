@@ -77,7 +77,8 @@ namespace SocialMedia
 
 			app.MapControllerRoute(
 				name: "default",
-				pattern: "{controller=Home}/{action=Index}/{id?}");
+				//pattern: "{controller=Home}/{action=Index}/{id?}");
+				pattern: "{controller=Media}/{action=MyPage}/{id?}");
 			app.MapRazorPages();
 
 			app.Run();

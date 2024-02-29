@@ -30,3 +30,19 @@ img {
 .user-select{
     font-size: 24px;
 }
+
+.blurb{
+    font-size: 24px;
+}
+
+.form-check-input {
+    margin-right: 15px;
+}
+
+.form-label {
+    vertical-align: middle;
+}
+
+.register-cat {
+    margin-left: 100px;
+}

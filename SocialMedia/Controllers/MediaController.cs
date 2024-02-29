@@ -22,7 +22,7 @@ namespace SocialMedia.Controllers
 			if (currentPlayer == null)
 			{
 				Console.WriteLine("Not Signed In");
-				//Return Error or Login Page
+				return null;
 			}
 			Profile data = DALProfile.GetAll().FirstOrDefault(x => x.Username.Equals(currentPlayer));
 			if (data != default(Profile))
