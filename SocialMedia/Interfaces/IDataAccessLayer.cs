@@ -13,7 +13,7 @@ namespace SocialMedia.Interfaces
         public void Remove(int? id);
 
         public void Update(T entity);
-
+     
         public IEnumerable<T> Search(string filters);
     }
 }

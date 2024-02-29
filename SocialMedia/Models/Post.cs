@@ -24,9 +24,6 @@ namespace SocialMedia.Models
             MatchingId = userID;
         }
 
-        public Post()
-        {
-
-        }
+        public Post() { }
     }
 }

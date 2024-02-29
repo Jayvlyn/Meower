@@ -39,15 +39,17 @@ namespace SocialMedia.Data
             }
         }
 
-        public IEnumerable<Post> Search(string filters)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Update(Post entity)
         {
             db.Posts.Update(entity);
             db.SaveChanges();
         }
-    }
+
+		#region no implementation needed
+		public IEnumerable<Post> Search(string filters)
+        {
+            throw new NotImplementedException();
+        }
+		#endregion
+	}
 }

@@ -46,3 +46,12 @@ img {
 .register-cat {
     margin-left: 100px;
 }
+
+.post-image {
+    max-height: 300px;
+    max-width: 300px;
+    height: auto;
+    width: auto;
+    min-height: 100px;
+    min-width: 100px;
+}

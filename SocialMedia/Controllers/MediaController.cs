@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.ObjectModelRemoting;
 using SocialMedia.Interfaces;
 using SocialMedia.Models;
 using System.Security.Claims;
@@ -12,8 +13,8 @@ namespace SocialMedia.Controllers
 
 		public MediaController(IDataAccessLayer<Profile> DALProfile, IDataAccessLayer<Post> DALPost)
 		{
-			this.DALProfile = DALProfile;
 			this.DALPost = DALPost;
+			this.DALProfile = DALProfile;
 		}
 
 		private Profile GetMatchingProfile()
@@ -24,11 +25,9 @@ namespace SocialMedia.Controllers
 				Console.WriteLine("Not Signed In");
 				return null;
 			}
+
 			Profile data = DALProfile.GetAll().FirstOrDefault(x => x.Username.Equals(currentPlayer));
-			if (data != default(Profile))
-			{
-				return data;
-			}
+			if (data != default(Profile)) return data;
 
 			Profile p = new Profile("Unnamed", "/images/CatPfp.png", 0,0, "Undecided");
 			p.Username = currentPlayer;
@@ -42,21 +41,11 @@ namespace SocialMedia.Controllers
 			if (p == null || p.Username == null)
 			{
 				Profile matching = GetMatchingProfile();
-				if(matching==null) return RedirectToPage("/Account/Login", new { area = "Identity" });
+				if (matching == null) return RedirectToPage("/Account/Login", new { area = "Identity" });
                 else return View(GetProfileWithPosts(GetMatchingProfile()));
             }
 			return View(GetProfileWithPosts(p));
 		}
-
-        private ProfileWithPosts GetProfileWithPosts(Profile profile)
-        {
-            return new ProfileWithPosts(profile, DALPost.GetAll().Where(x => x.ReceiverId == profile.Username));
-        }
-
-        private ProfileWithPosts GetProfileWithPostsPersonal(Profile profile)
-        {
-            return new ProfileWithPosts(profile, DALPost.GetAll().Where(x => x.PosterId == profile.Username));
-        }
 
         [HttpGet]
 		public IActionResult Edit(int? id)
@@ -81,13 +70,10 @@ namespace SocialMedia.Controllers
 		[HttpPost] 
 		public IActionResult Edit(Profile m)
 		{
-			if(!ModelState.IsValid)
-			{
-				return View();
-			}
+			if(!ModelState.IsValid) return View();
 
 			DALProfile.Update(m);
-			TempData["Success"] = "Profile updated";
+			TempData["Success"] = "Profile updated!";
 			return RedirectToAction("MyPage", "Media");
 		}
 
@@ -104,19 +90,30 @@ namespace SocialMedia.Controllers
 
         public IActionResult SeePosts()
         {
-            Profile p = GetMatchingProfile();
-            return View("MyPage", GetProfileWithPostsPersonal(p));
+            return View("MyPage", GetProfileWithPostsPersonal(GetMatchingProfile()));
         }
 
-        public IActionResult PostPost(Post post)
+        public IActionResult Post(Post post)
         {
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("CreatePost", "Media", new { receiver = post.ReceiverId });
-            }
-
+            if (!ModelState.IsValid) return RedirectToAction("CreatePost", "Media", new { receiver = post.ReceiverId });
             DALPost.Add(post);
             return RedirectToAction("MyPage", "Media");
         }
+
+        private ProfileWithPosts GetProfileWithPosts(Profile profile)
+        {
+            return new ProfileWithPosts(profile, DALPost.GetAll().Where(x => x.ReceiverId == profile.Username));
+        }
+
+        private ProfileWithPosts GetProfileWithPostsPersonal(Profile profile)
+        {
+            return new ProfileWithPosts(profile, DALPost.GetAll().Where(x => x.PosterId == profile.Username));
+        }
+
+		[Route("/bleh")]
+		public IActionResult Bleh()
+		{
+			return View();
+		}
     }
 }

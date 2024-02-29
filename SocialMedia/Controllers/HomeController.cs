@@ -13,17 +13,17 @@ namespace SocialMedia.Controllers
 			_logger = logger;
 		}
 
+		public IActionResult AboutMe()
+		{
+			return View();
+		}
+
 		public IActionResult Index()
 		{
 			return View();
 		}
 
 		public IActionResult Privacy()
-		{
-			return View();
-		}
-
-		public IActionResult AboutMe()
 		{
 			return View();
 		}
