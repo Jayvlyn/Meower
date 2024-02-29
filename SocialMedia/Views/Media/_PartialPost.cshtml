@@ -1,0 +1,15 @@
+﻿@using System.Security.Claims;
+@model Post
+
+<div>
+	<hr />
+		<img src="@Model.Image" width="300" />
+		<hr />
+		@Model.Caption
+
+		<form asp-controller="Media" asp-action="MyPage">
+			<input name="id" type="hidden" value="@Model.MatchingId" />
+			<button class="btn btn-primary" type="submit">Posted By: @Model.PosterDisplayName</button>
+		</form>
+	<hr />
+</div>

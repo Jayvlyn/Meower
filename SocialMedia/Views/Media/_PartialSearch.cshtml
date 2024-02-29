@@ -1,0 +1,13 @@
+﻿@model Profile
+
+<form asp-controller="Media" asp-action="MyPage">
+	<input type="hidden" name="id" value="@Model.Id" />
+	<button class="btn btn-danger" type="submit">
+		<div>
+			<img src="@Model.Picture" width="100"/>
+		</div>
+		<div class="user-select">
+			@Model.DisplayName, @Model.Age
+		</div>
+	</button>
+</form>

@@ -1,0 +1,42 @@
+﻿@model Post
+
+<form asp-controller="Media" asp-action="PostPost">
+	<div class="border p-3 mt-4">
+		<div class="row pb-2">
+			<h2 class="text-primary">Create Post</h2>
+			<hr />
+			<div asp-validation-summary="All" class="text-danger"></div>
+		</div>
+
+
+		<div class="mb-3">
+			<label asp-for="Image"></label>
+			<input asp-for="Image" class="form-control" />
+			<span asp-validation-for="Image" class="error-messages"></span>
+
+		</div>
+		<div class="mb-3">
+			<label asp-for="Caption"></label>
+			<input asp-for="Caption" class="form-control" />
+			<span asp-validation-for="Caption" class="error-messages"></span>
+
+		</div>
+
+		<input asp-for="Id" type="hidden" />
+		<input asp-for="PosterId" type="hidden" />
+		<input asp-for="PosterUsername" type="hidden" />
+		<input asp-for="PosterDisplayName" type="hidden" />
+		<input asp-for="ReceiverId" type="hidden" />
+		<input asp-for="MatchingId" type="hidden" />
+
+		<button type="submit" class="btn btn-primary">
+			Create Post
+
+		</button>
+		<div name="lblMsg" class="text-danger">
+			@ViewData["Error"]
+		</div>
+	</div>
+
+
+</form>

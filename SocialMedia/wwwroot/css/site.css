@@ -1,0 +1,32 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+img {
+    border: solid;
+    border-color: black;
+    border-width: 5px;
+}
+
+.center {
+    text-align: center;
+}
+
+.user-select{
+    font-size: 24px;
+}

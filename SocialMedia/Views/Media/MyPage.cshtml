@@ -1,0 +1,208 @@
+﻿@using System.Security.Claims;
+@model ProfileWithPosts
+
+<div class="container">
+	<div class="row justify-content-center">
+		<div class="col-md-6 text-center">
+			<img src="@Model.profile.Picture" width="300" class="mb-3" />
+			<h4>@Model.profile.DisplayName</h4>
+			<p><b>Age:</b> @Model.profile.Age</p>
+			<p><b>Cats owned:</b> @Model.profile.CatsOwned</p>
+			<p><b>Favorite Cat Breed:</b> @Model.profile.FavoriteCatBreed</p>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="col-md-6 text-center">
+			@if (User.FindFirstValue(ClaimTypes.NameIdentifier) != null)
+			{
+				if (User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.profile.Username)
+				{
+					<div class="row">
+						<div class="col-4">
+							@if (Model.profile.Username == User.FindFirstValue(ClaimTypes.NameIdentifier))
+							{
+								<form asp-action="Edit" asp-controller="Media" method="get">
+									<input name="Id" type="hidden" value="@Model.profile.Id" />
+									<button class="btn btn-outline-info" type="submit">Edit</button>
+								</form>
+							}
+						</div>
+						<div class="col-4">
+							<form asp-controller="Media" asp-action="CreatePost">
+								<input name="receiver" value="@Model.profile.Username" type="hidden">
+								<button class="btn btn-primary">Create Post</button>
+							</form>
+						</div>
+						<div class="col-4">
+							<form asp-controller="Media" asp-action="SeePosts">
+								<button class="btn btn-primary">View All My Posts</button>
+							</form>
+						</div>
+					</div>
+				}
+				else
+				{
+					<form asp-controller="Media" asp-action="CreatePost">
+						<input name="receiver" value="@Model.profile.Username" type="hidden">
+						<button class="btn btn-primary">Leave Post</button>
+					</form>
+				}
+			}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			@foreach (var post in Model.posts)
+			{
+				<partial name="_PartialPost.cshtml" for="@post" />
+			}
+		</div>
+	</div>
+</div>
+
+@* @using System.Security.Claims;
+@model ProfileWithPosts
+
+<div class="row">
+	<div class="text-centered">
+		<img src=@Model.profile.Picture width="300"/>
+	</div>
+	<div class="text-centered">
+		<b>Name:</b> @Model.profile.DisplayName
+	</div>
+	<div class="text-centered">
+		<b>Age:</b> @Model.profile.Age
+	</div>
+	<div class="text-centered">
+		<b>Cats owned:</b> @Model.profile.CatsOwned
+	</div>
+	<div class="text-centered">
+		<b>Favorite Cat Breed:</b> @Model.profile.FavoriteCatBreed
+	</div>
+	<div>
+		@if (Model.profile.Username == User.FindFirstValue(ClaimTypes.NameIdentifier))
+		{
+			<form asp-action="Edit" , asp-controller="Media" method="get">
+				<input name="Id" type="hidden" value="@Model.profile.Id" />
+
+				<button class="btn btn-outline-info" type="submit">Edit</button>
+			</form>
+		}
+	</div>
+</div>
+<div class="row">
+	<div>
+		<br />
+		@if (User.FindFirstValue(ClaimTypes.NameIdentifier) != null)
+		{
+			if (User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.profile.Username)
+			{
+				<div class="row">
+					<div class="col-1">
+						<form asp-controller="Media" asp-action="CreatePost">
+							<input name="receiver" value="@Model.profile.Username" type="hidden">
+							<button class="btn btn-primary">Create Post</button>
+						</form>
+					</div>
+					<div class="col-1">
+						<form asp-controller="Media" asp-action="SeePosts">
+							<button class="btn btn-primary">View All My Posts</button>
+						</form>
+					</div>
+					<div class="col-10"></div>
+				</div>
+
+			}
+			else
+			{
+				<form asp-controller="Media" asp-action="CreatePost">
+					<input name="receiver" value="@Model.profile.Username" type="hidden">
+					<button class="btn btn-primary">Leave Post</button>
+				</form>
+			}
+		}
+		<div />
+		<br />
+		<div row>
+			@foreach (var post in Model.posts)
+			{
+				<br />
+				<partial name="_PartialPost.cshtml" for="@post" />
+			}
+		</div>
+	</div>
+</div>
+ *@
+@* 
+<div class="row">
+	<div class="col-4" class="text-centered">
+		<div class="text-centered">
+			<img src=@Model.profile.Picture width="300" />
+		</div>
+		<div class="text-centered">
+			<b>Name:</b> @Model.profile.DisplayName
+		</div>
+		<div class="text-centered">
+			<b>Age:</b> @Model.profile.Age
+		</div>
+		<div class="text-centered">
+			<b>Cats owned:</b> @Model.profile.CatsOwned
+		</div>
+		<div class="text-centered">
+			<b>Favorite Cat Breed:</b> @Model.profile.FavoriteCatBreed
+		</div>
+		<div>
+			@if (Model.profile.Username == User.FindFirstValue(ClaimTypes.NameIdentifier))
+			{
+				<form asp-action="Edit" , asp-controller="Media" method="get">
+					<input name="Id" type="hidden" value="@Model.profile.Id" />
+
+					<button class="btn btn-outline-success" type="submit">Edit</button>
+				</form>
+			}
+		</div>
+	</div>
+
+	<div class="col-8">
+
+		<div>
+			<br />
+			@if (User.FindFirstValue(ClaimTypes.NameIdentifier) != null)
+			{
+				if (User.FindFirstValue(ClaimTypes.NameIdentifier) == Model.profile.Username)
+				{
+					<div class="row">
+						<div class="col-6">
+							<form asp-controller="Media" asp-action="CreatePost">
+								<input name="receiver" value="@Model.profile.Username" type="hidden">
+								<button class="btn btn-primary">Create Own Post</button>
+							</form>
+						</div>
+						<div class="col-6">
+							<form asp-controller="Media" asp-action="SeePosts">
+								<button class="btn btn-primary">View All My Posts</button>
+							</form>
+						</div>
+					</div>
+
+				}
+				else
+				{
+					<form asp-controller="Media" asp-action="CreatePost">
+						<input name="receiver" value="@Model.profile.Username" type="hidden">
+						<button class="btn btn-primary">Leave Post</button>
+					</form>
+				}
+			}
+			<div />
+			<br />
+			<div row>
+				@foreach (var post in Model.posts)
+				{
+					<br />
+					<partial name="_PartialPost.cshtml" for="@post" />
+				}
+			</div>
+		</div>
+	</div>
+ *@
